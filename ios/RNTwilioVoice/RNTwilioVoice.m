@@ -8,6 +8,8 @@
 
 NSString * const kCachedDeviceToken = @"CachedDeviceToken";
 NSString * const kCallerNameCustomParameter = @"CallerName";
+NSString * const kCallerIdCustomParameter = @"CallerId";
+NSString * const kCallRequestSerialCustomParameter = @"CallRequestSerial";
 
 @interface RNTwilioVoice () <PKPushRegistryDelegate, TVONotificationDelegate, TVOCallDelegate, CXProviderDelegate>
 
@@ -154,6 +156,7 @@ RCT_EXPORT_METHOD(unregister) {
                                     if (error) {
                                         NSLog(@"An error occurred while unregistering: %@", [error localizedDescription]);
                                     } else {
+                                    [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:kCachedDeviceToken];
                                         NSLog(@"Successfully unregistered for VoIP push notifications.");
                                     }
                                 }];
@@ -278,6 +281,7 @@ RCT_REMAP_METHOD(getCallInvite,
                                                    if (error) {
                                                      NSLog(@"An error occurred while unregistering: %@", [error localizedDescription]);
                                                    } else {
+                                                   [[NSUserDefaults standardUserDefaults] setValue:@"" forKey:kCachedDeviceToken];
                                                      NSLog(@"Successfully unregistered for VoIP push notifications.");
                                                    }
                                                  }];
@@ -368,6 +372,18 @@ withCompletionHandler:(void (^)(void))completion {
     }
     if (callInvite.to) {
       [params setObject:callInvite.to forKey:@"call_to"];
+    }
+
+    if (callInvite.customParameters[kCallerIdCustomParameter]) {
+        [params setObject:callInvite.customParameters[kCallerIdCustomParameter] forKey:@"caller_id"];
+    }
+
+    if (callInvite.customParameters[kCallerIdCustomParameter]) {
+        [params setObject:callInvite.customParameters[kCallerNameCustomParameter] forKey:@"caller_name"];
+    }
+
+    if (callInvite.customParameters[kCallerIdCustomParameter]) {
+        [params setObject:callInvite.customParameters[kCallRequestSerialCustomParameter] forKey:@"call_request_serial"];
     }
     [self sendEventWithName:@"deviceDidReceiveIncoming" body:params];
 }
@@ -816,3 +832,4 @@ withCompletionHandler:(void (^)(void))completion {
 }
 
 @end
+s
