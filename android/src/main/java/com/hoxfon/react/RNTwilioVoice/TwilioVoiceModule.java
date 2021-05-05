@@ -483,8 +483,8 @@ public class TwilioVoiceModule extends ReactContextBaseJavaModule implements Act
                         appImportance == RunningAppProcessInfo.IMPORTANCE_SERVICE) {
                             
                     Map<String, String> customParams = activeCallInvite.getCustomParameters();
-                    System.out.println('customParams');
-                    System.out.println(customParams);
+                    Log.d("customParams");
+                    Log.d(customParams);
                     WritableMap params = Arguments.createMap();
                     params.putString("call_sid", activeCallInvite.getCallSid());
                     params.putString("call_from", activeCallInvite.getFrom());
