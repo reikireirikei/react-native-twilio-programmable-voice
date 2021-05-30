@@ -237,7 +237,6 @@ RCT_REMAP_METHOD(getCallInvite,
                                                         ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
     NSString *accessToken = [self fetchAccessToken];
     NSString *cachedDeviceToken = [[NSUserDefaults standardUserDefaults] objectForKey:kCachedDeviceToken];
-    if (![cachedDeviceToken isEqualToString:deviceTokenString]) {
         cachedDeviceToken = deviceTokenString;
 
         /*
@@ -263,7 +262,6 @@ RCT_REMAP_METHOD(getCallInvite,
                  [self sendEventWithName:@"deviceReady" body:nil];
              }
          }];
-    }
   }
 }
 
